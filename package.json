@@ -1,0 +1,28 @@
+{
+  "name": "com.sakumon.analytics",
+  "version": "0.1.0",
+  "displayName": "Sakumon Analytics",
+  "description": "Analytics abstractions, event data models, and Unity Services Analytics integration for Sakumon projects.",
+  "unity": "6000.0",
+  "unityRelease": "0f1",
+  "license": "MIT",
+  "author": {
+    "name": "Joao Victor Alencar",
+    "url": "https://github.com/joaovictoralencar"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joaovictoralencar/sakumon-analytics.git"
+  },
+  "keywords": [
+    "analytics",
+    "unity-services",
+    "events",
+    "telemetry"
+  ],
+  "dependencies": {
+    "com.cysharp.unitask": "2.5.11",
+    "com.hellodev.utils": "1.2.0",
+    "com.unity.services.analytics": "6.3.0"
+  }
+}

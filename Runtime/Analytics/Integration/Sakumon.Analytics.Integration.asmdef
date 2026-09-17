@@ -1,0 +1,22 @@
+{
+  "name": "Sakumon.Analytics.Integration",
+  "rootNamespace": "Sakumon.Managers.Analytics",
+  "references": [
+    "Sakumon.Analytics",
+    "Sakumon.Analytics.Data",
+    "HelloDev.Utils",
+    "UniTask",
+    "Unity.Services.Analytics"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "SAKUMON_ANALYTICS_PROJECT_INTEGRATION"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

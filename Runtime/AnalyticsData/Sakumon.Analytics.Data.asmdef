@@ -1,0 +1,16 @@
+{
+  "name": "Sakumon.Analytics.Data",
+  "rootNamespace": "Sakumon.Analytics.Data",
+  "references": [
+    "Unity.Services.Analytics"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
