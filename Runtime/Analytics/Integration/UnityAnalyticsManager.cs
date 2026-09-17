@@ -1,22 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Cysharp.Threading.Tasks;
-using HelloDev.Logging;
 using HelloDev.Analytics.Data;
-using Sakumon.Locators;
-using Scripts.Connection;
-using Scripts.SaveManagement;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
 using UnityEngine;
-using Logger = HelloDev.Logging.Logger;
+using UnityEngine.SceneManagement;
 
 namespace HelloDev.Analytics
 {
     public class UnityAnalyticsManager : AnalyticsManagerBase
     {
-        [SerializeField] private AnalyticsLocatorSO _locator;
+        private const string ConsentShownKey = "HelloDev.Analytics.ConsentShown";
+        private const string ConsentKey = "HelloDev.Analytics.Consent";
+        private const string PlayerIdKey = "HelloDev.Analytics.PlayerId";
 
         #region Events
 
@@ -25,6 +22,7 @@ namespace HelloDev.Analytics
 
         public static Action ShowConsentUI;
         public static Action OnConsentSharingData;
+        public static event Action<IAnalytics, GameObject> InstanceCreated;
 
         #endregion
 
@@ -37,8 +35,8 @@ namespace HelloDev.Analytics
             if (_instance == null)
             {
                 _instance = this;
-                _locator.Register(this, gameObject);
                 DontDestroyOnLoad(gameObject);
+                InstanceCreated?.Invoke(this, gameObject);
             }
             else
             {
@@ -50,125 +48,71 @@ namespace HelloDev.Analytics
         {
             if (_instance != this) return;
             _instance = null;
-            _locator.Unregister(this);
-            OnAnalyticsInitialized -= SaveEssentialData;
         }
 
         public void Start()
         {
             if (Initialized) return;
-            AuthenticationHelper.OnSignInSuccess += InitializeAnalytics;
-            OnAnalyticsInitialized += SaveEssentialData;
+            PlayerId = PlayerPrefs.GetString(PlayerIdKey, Application.identifier);
+            EssentialData = new AnalyticsEssentialData
+            {
+                PlayerName = PlayerId,
+                Language = Application.systemLanguage.ToString(),
+                IsMultiplayer = false,
+                PlayerLevel = 1,
+                GameScene = SceneManager.GetActiveScene().name
+            }.ToDictionary();
+
+            if (PlayerPrefs.GetInt(ConsentShownKey, 0) == 1)
+            {
+                if (GetPlayerConsentStatus())
+                    _ = InitializeIfNot(true);
+                return;
+            }
+
+            ConsentShareData += OnConsentShareData;
+            ConsentRejectData += OnConsentRejectData;
+            ShowConsentUI?.Invoke();
         }
 
         #endregion
 
         #region Private Methods
 
-        private void SaveEssentialData()
-        {
-            EssentialData = new AnalyticsEssentialData
-            {
-                PlayerName = ConnectionManager.Instance.LocalPlayerId,
-                Language = Application.systemLanguage.ToString(),
-                IsMultiplayer = false,
-                PlayerLevel = 1,
-                GameScene = Scenes.MainMenu
-            }.ToDictionary();
-
-            var sb = new StringBuilder();
-            if (EssentialData is { Count: > 0 })
-            {
-                sb.AppendLine("[Event Data]");
-                foreach (var kvp in EssentialData)
-                    sb.AppendLine($"  {kvp.Key}: {kvp.Value}");
-            }
-
-            Logger.Log(LogIds.Analytics, $"Essential Data Saved: {sb.ToString().TrimEnd()}");
-        }
-
-        private async void InitializeAnalytics()
-        {
-            try
-            {
-                var ct = this.GetCancellationTokenOnDestroy();
-                while (!SaveManager.Instance.LastLoadSucceeded)
-                {
-                    await UniTask.Yield(ct);
-                }
-
-                // Get the live save data
-                SaveData save = await SaveManager.Instance.GetSaveCachedData();
-                var flags = save.Flags; // local reference for reading only
-
-                if (flags.AnalyticsConsentShowed)
-                {
-                    if (flags.AnalyticsConsent)
-                    {
-                        await Initialize(flags.AnalyticsConsent);
-                        return;
-                    }
-                }
-
-                Logger.Log(LogIds.Analytics, "Analytics Consent Not Showed. Showing Consent Screen");
-                ConsentShareData += OnConsentShareData;
-                ConsentRejectData += OnConsentRejectData;
-                ShowConsentUI?.Invoke();
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(LogIds.Analytics, $"Analytics Initialization Failed: {e.Message}");
-            }
-        }
-
         private async void OnConsentShareData()
         {
             try
             {
-                SaveData save = await SaveManager.Instance.GetSaveCachedData();
-                var flags = save.Flags;
-
                 SaveConsentStatus(true);
-                flags.SetAnalyticsConsentShowed(true);
+                PlayerPrefs.SetInt(ConsentShownKey, 1);
+                PlayerPrefs.Save();
 
-                // Save immediately – this will persist the changes
-                await SaveManager.Instance.SaveDataImmediately();
-
-                Logger.Log(LogIds.Analytics, "Accepted Analytics Consent Data Sharing");
-
-                // Initialize SDK
                 await InitializeIfNot(true);
 
-                // Unregister events
                 ConsentShareData -= OnConsentShareData;
                 ConsentRejectData -= OnConsentRejectData;
                 OnConsentSharingData?.Invoke();
             }
             catch (Exception e)
             {
-                Logger.LogError(LogIds.Analytics, $"Failed to accept analytics consent: {e.Message}");
+                Debug.LogError($"[Analytics] Failed to accept analytics consent: {e.Message}");
             }
         }
 
-        private async void OnConsentRejectData()
+        private void OnConsentRejectData()
         {
             try
             {
-                SaveData save = await SaveManager.Instance.GetSaveCachedData();
-                var flags = save.Flags;
-
                 SaveConsentStatus(false);
-                flags.SetAnalyticsConsentShowed(true);
-                await SaveManager.Instance.SaveDataImmediately();
-
-                Logger.Log(LogIds.Analytics, "Rejected Analytics Consent Data Sharing");
+                PlayerPrefs.SetInt(ConsentShownKey, 1);
+                PlayerPrefs.Save();
 
                 ConsentShareData -= OnConsentShareData;
                 ConsentRejectData -= OnConsentRejectData;
             }
             catch (Exception e)
             {
-                Logger.LogError(LogIds.Analytics, $"Failed to reject analytics consent: {e.Message}");
+                Debug.LogError($"[Analytics] Failed to reject analytics consent: {e.Message}");
             }
         }
 
@@ -197,12 +141,10 @@ namespace HelloDev.Analytics
 
         protected override void HookManagerEvents()
         {
-            ConnectionManager.OnConnectionSignedOut += StopAnalytics;
         }
 
         protected override void UnHookManagerEvents()
         {
-            ConnectionManager.OnConnectionSignedOut -= StopAnalytics;
         }
 
         #endregion
@@ -211,12 +153,13 @@ namespace HelloDev.Analytics
 
         protected override void SaveConsentStatus(bool consent)
         {
-            SaveManager.Instance.GetSaveData.Flags.SetAnalyticsConsent(consent);
+            PlayerPrefs.SetInt(ConsentKey, consent ? 1 : 0);
+            PlayerPrefs.Save();
         }
 
         protected override bool LoadConsentStatus()
         {
-            return SaveManager.Instance.GetSaveData.Flags.AnalyticsConsent;
+            return PlayerPrefs.GetInt(ConsentKey, 0) == 1;
         }
 
         #endregion
@@ -256,7 +199,7 @@ namespace HelloDev.Analytics
         {
             foreach (var kvp in EssentialData) customEvent.Add(kvp.Key, kvp.Value);
             AnalyticsService.Instance.RecordEvent(customEvent);
-            Logger.Log(LogIds.Analytics, FormatEventLog(customEvent.EventName, customEvent.InternalData));
+            Debug.Log($"[Analytics] {FormatEventLog(customEvent.EventName, customEvent.InternalData)}");
             AnalyticsService.Instance.Flush();
         }
 
