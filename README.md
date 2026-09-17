@@ -24,8 +24,8 @@ For a released version, append the tag, for example `#v0.2.0`.
 
 Consent state is stored locally with Unity `PlayerPrefs`. The package does not require a project save system, authentication system, locator system, or scene system. Logging uses the shared HelloDev Logging system.
 
-## Project integration adapter
+## Unity implementation
 
-`Runtime/Analytics/Integration/UnityAnalyticsManager.cs` provides a Unity Services Analytics manager. The integration assembly is included automatically when the package is installed.
+`Runtime/Analytics/Unity/UnityAnalyticsManager.cs` provides the Unity Services Analytics implementation. The `HelloDev.Analytics.Unity` assembly is included automatically when the package is installed.
 
 Set the player ID through the manager before initialization when a project-specific ID is available; otherwise the application identifier is used.

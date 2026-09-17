@@ -1,5 +1,5 @@
 {
-  "name": "HelloDev.Analytics.Integration",
+  "name": "HelloDev.Analytics.Unity",
   "rootNamespace": "HelloDev.Analytics",
   "references": [
     "HelloDev.Analytics",
