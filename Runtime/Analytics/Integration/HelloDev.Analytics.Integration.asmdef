@@ -13,10 +13,8 @@
   "allowUnsafeCode": false,
   "overrideReferences": false,
   "precompiledReferences": [],
-  "autoReferenced": false,
-  "defineConstraints": [
-    "HELLODEV_ANALYTICS_PROJECT_INTEGRATION"
-  ],
+  "autoReferenced": true,
+  "defineConstraints": [],
   "versionDefines": [],
   "noEngineReferences": false
 }

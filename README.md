@@ -26,6 +26,6 @@ Consent state is stored locally with Unity `PlayerPrefs`. The package does not r
 
 ## Project integration adapter
 
-`Runtime/Analytics/Integration/UnityAnalyticsManager.cs` provides a Unity Services Analytics manager. Its assembly is disabled by default so projects can opt into the Unity Services adapter explicitly.
+`Runtime/Analytics/Integration/UnityAnalyticsManager.cs` provides a Unity Services Analytics manager. The integration assembly is included automatically when the package is installed.
 
-To compile that adapter, add the `HELLODEV_ANALYTICS_PROJECT_INTEGRATION` scripting define symbol. Set the player ID through the manager before initialization when a project-specific ID is available; otherwise the application identifier is used.
+Set the player ID through the manager before initialization when a project-specific ID is available; otherwise the application identifier is used.
