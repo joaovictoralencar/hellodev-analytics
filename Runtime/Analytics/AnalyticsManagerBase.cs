@@ -4,6 +4,7 @@ using System.Text;
 using Cysharp.Threading.Tasks;
 using HelloDev.Logging;
 using UnityEngine;
+using Logger = HelloDev.Logging.Logger;
 
 namespace HelloDev.Analytics
 {

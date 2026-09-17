@@ -7,6 +7,7 @@ using Unity.Services.Analytics;
 using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Logger = HelloDev.Logging.Logger;
 
 namespace HelloDev.Analytics
 {
