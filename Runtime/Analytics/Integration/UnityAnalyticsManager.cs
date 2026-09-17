@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Cysharp.Threading.Tasks;
 using HelloDev.Logging;
-using Sakumon.Analytics.Data;
+using HelloDev.Analytics.Data;
 using Sakumon.Locators;
 using Scripts.Connection;
 using Scripts.SaveManagement;
@@ -12,7 +12,7 @@ using Unity.Services.Core;
 using UnityEngine;
 using Logger = HelloDev.Logging.Logger;
 
-namespace Sakumon.Managers.Analytics
+namespace HelloDev.Analytics
 {
     public class UnityAnalyticsManager : AnalyticsManagerBase
     {

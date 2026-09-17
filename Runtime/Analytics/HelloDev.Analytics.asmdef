@@ -1,7 +1,10 @@
 {
-  "name": "Sakumon.Analytics.Interfaces",
-  "rootNamespace": "Sakumon.Managers.Analytics",
+  "name": "HelloDev.Analytics",
+  "rootNamespace": "HelloDev.Analytics",
   "references": [
+    "HelloDev.Analytics.Interfaces",
+    "HelloDev.Analytics.Data",
+    "HelloDev.Utils",
     "UniTask"
   ],
   "includePlatforms": [],

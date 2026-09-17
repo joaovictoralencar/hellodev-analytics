@@ -6,7 +6,7 @@ using HelloDev.Logging;
 using UnityEngine;
 using Logger = HelloDev.Logging.Logger;
 
-namespace Sakumon.Managers.Analytics
+namespace HelloDev.Analytics
 {
     public abstract class AnalyticsManagerBase : MonoBehaviour, IAnalytics
     {

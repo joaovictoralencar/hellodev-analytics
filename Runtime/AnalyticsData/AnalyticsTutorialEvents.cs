@@ -1,4 +1,4 @@
-namespace Sakumon.Analytics.Data
+namespace HelloDev.Analytics.Data
 {
     public class TutorialStartedEvent : AnalyticsCustomEvent
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sakumon.Analytics.Data
+namespace HelloDev.Analytics.Data
 {
     public class AnalyticsEssentialData
     {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Unity.Services.Analytics;
 
-namespace Sakumon.Analytics.Data
+namespace HelloDev.Analytics.Data
 {
     public abstract class AnalyticsCustomEvent : CustomEvent
     {

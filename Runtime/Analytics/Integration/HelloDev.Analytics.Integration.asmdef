@@ -1,9 +1,9 @@
 {
-  "name": "Sakumon.Analytics.Integration",
-  "rootNamespace": "Sakumon.Managers.Analytics",
+  "name": "HelloDev.Analytics.Integration",
+  "rootNamespace": "HelloDev.Analytics",
   "references": [
-    "Sakumon.Analytics",
-    "Sakumon.Analytics.Data",
+    "HelloDev.Analytics",
+    "HelloDev.Analytics.Data",
     "HelloDev.Utils",
     "UniTask",
     "Unity.Services.Analytics"
@@ -15,7 +15,7 @@
   "precompiledReferences": [],
   "autoReferenced": false,
   "defineConstraints": [
-    "SAKUMON_ANALYTICS_PROJECT_INTEGRATION"
+    "HELLODEV_ANALYTICS_PROJECT_INTEGRATION"
   ],
   "versionDefines": [],
   "noEngineReferences": false

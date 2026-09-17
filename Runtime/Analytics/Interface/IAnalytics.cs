@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 
-namespace Sakumon.Managers.Analytics
+namespace HelloDev.Analytics
 {
     public interface IAnalytics
     {

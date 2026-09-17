@@ -1,8 +1,8 @@
 {
-  "name": "com.sakumon.analytics",
+  "name": "com.hellodev.analytics",
   "version": "0.1.0",
-  "displayName": "Sakumon Analytics",
-  "description": "Analytics abstractions, event data models, and Unity Services Analytics integration for Sakumon projects.",
+  "displayName": "HelloDev Analytics",
+  "description": "Reusable analytics abstractions, event data models, and Unity Services Analytics integration.",
   "unity": "6000.0",
   "unityRelease": "0f1",
   "license": "MIT",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joaovictoralencar/sakumon-analytics.git"
+    "url": "https://github.com/joaovictoralencar/hellodev-analytics.git"
   },
   "keywords": [
     "analytics",
