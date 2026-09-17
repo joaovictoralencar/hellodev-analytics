@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using HelloDev.Analytics.Data;
+using HelloDev.Logging;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
 using UnityEngine;
@@ -95,7 +96,7 @@ namespace HelloDev.Analytics
             }
             catch (Exception e)
             {
-                Debug.LogError($"[Analytics] Failed to accept analytics consent: {e.Message}");
+                Logger.LogError(AnalyticsLogSystem, $"Failed to accept analytics consent: {e.Message}");
             }
         }
 
@@ -112,7 +113,7 @@ namespace HelloDev.Analytics
             }
             catch (Exception e)
             {
-                Debug.LogError($"[Analytics] Failed to reject analytics consent: {e.Message}");
+                Logger.LogError(AnalyticsLogSystem, $"Failed to reject analytics consent: {e.Message}");
             }
         }
 
@@ -199,7 +200,7 @@ namespace HelloDev.Analytics
         {
             foreach (var kvp in EssentialData) customEvent.Add(kvp.Key, kvp.Value);
             AnalyticsService.Instance.RecordEvent(customEvent);
-            Debug.Log($"[Analytics] {FormatEventLog(customEvent.EventName, customEvent.InternalData)}");
+            Logger.Log(AnalyticsLogSystem, FormatEventLog(customEvent.EventName, customEvent.InternalData));
             AnalyticsService.Instance.Flush();
         }
 

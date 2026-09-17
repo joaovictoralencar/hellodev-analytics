@@ -19,9 +19,10 @@ For a released version, append the tag, for example `#v0.2.0`.
 ## Dependencies
 
 - UniTask
+- HelloDev Utils
 - Unity Services Analytics
 
-Consent state is stored locally with Unity `PlayerPrefs`. The package does not require a project save system, authentication system, locator system, scene system, or logging package.
+Consent state is stored locally with Unity `PlayerPrefs`. The package does not require a project save system, authentication system, locator system, or scene system. Logging uses the shared HelloDev Logging system.
 
 ## Project integration adapter
 

@@ -4,6 +4,7 @@
   "references": [
     "HelloDev.Analytics",
     "HelloDev.Analytics.Data",
+    "HelloDev.Utils",
     "UniTask",
     "Unity.Services.Analytics"
   ],

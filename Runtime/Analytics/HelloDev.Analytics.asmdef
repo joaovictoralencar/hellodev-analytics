@@ -4,6 +4,7 @@
   "references": [
     "HelloDev.Analytics.Interfaces",
     "HelloDev.Analytics.Data",
+    "HelloDev.Utils",
     "UniTask"
   ],
   "includePlatforms": [],

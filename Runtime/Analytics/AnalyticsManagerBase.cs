@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Cysharp.Threading.Tasks;
+using HelloDev.Logging;
 using UnityEngine;
 
 namespace HelloDev.Analytics
 {
     public abstract class AnalyticsManagerBase : MonoBehaviour, IAnalytics
     {
+        protected const string AnalyticsLogSystem = "Analytics";
+
         #region Properties
 
         public string PlayerId { get; set; } = string.Empty;
@@ -34,7 +37,7 @@ namespace HelloDev.Analytics
         public void UpdateEssentialData(string key, object value)
         {
             EssentialData[key] = value;
-            Debug.Log($"[Analytics] Essential Data Updated\n  {key}: {value}");
+            Logger.Log(AnalyticsLogSystem, $"Essential Data Updated\n  {key}: {value}");
         }
         
         #endregion
@@ -55,14 +58,14 @@ namespace HelloDev.Analytics
                     Initialized = true;
                     SetPlayerConsentStatus(consent, PlayerId);
                     HookManagerEvents();
-                    Debug.Log($"[Analytics] {FormatInitLog(consent)}");
+                    Logger.Log(AnalyticsLogSystem, FormatInitLog(consent));
                     OnAnalyticsInitialized?.Invoke();
                 }
                 return initialized;
             }
             catch (Exception e)
             {
-                Debug.LogError($"[Analytics] Analytics Initialization Failed: {e.Message}");
+                Logger.LogError(AnalyticsLogSystem, $"Analytics Initialization Failed: {e.Message}");
                 throw;
             }
         }
@@ -85,7 +88,7 @@ namespace HelloDev.Analytics
             if (CheckInitialized()) StopDataCollection();
             UnHookManagerEvents();
             Initialized = false;
-            Debug.Log("[Analytics] Analytics Stopped");
+            Logger.Log(AnalyticsLogSystem, "Analytics Stopped");
         }
 
         public void DeletePlayerData()
@@ -93,7 +96,7 @@ namespace HelloDev.Analytics
             if (!CheckInitialized()) return;
             RequestDataDeletion();
             SetPlayerConsentStatus(false, PlayerId);
-            Debug.Log("[Analytics] Player Data Deleted");
+            Logger.Log(AnalyticsLogSystem, "Player Data Deleted");
         }
         
         #endregion
@@ -108,7 +111,7 @@ namespace HelloDev.Analytics
             else
                 StopDataCollection();
             SaveConsentStatus(consent);
-            Debug.Log($"[Analytics] Player Consent Status: {consent}\nPlayer Id: {playerId}");
+            Logger.Log(AnalyticsLogSystem, $"Player Consent Status: {consent}\nPlayer Id: {playerId}");
         }
 
         public bool GetPlayerConsentStatus() => LoadConsentStatus();
@@ -124,7 +127,7 @@ namespace HelloDev.Analytics
             foreach (var kvp in data) mergedData[kvp.Key] = kvp.Value;
 
             RecordEvent(eventName, mergedData);
-            Debug.Log($"[Analytics] {FormatEventLog(eventName, data)}");
+            Logger.Log(AnalyticsLogSystem, FormatEventLog(eventName, data));
         }
 
         #endregion
