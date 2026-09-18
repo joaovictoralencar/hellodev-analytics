@@ -15,7 +15,7 @@ Add the package to Unity Package Manager with:
 https://github.com/joaovictoralencar/hellodev-analytics.git
 ```
 
-For a released version, append the tag, for example `#v0.3.1`.
+For a released version, append the tag, for example `#v0.3.2`.
 
 ## Dependencies
 
