@@ -6,6 +6,7 @@ using HelloDev.Logging;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.UnityConsent;
 using UnityEngine.SceneManagement;
 using Logger = HelloDev.Logging.Logger;
 
@@ -171,16 +172,26 @@ namespace HelloDev.Analytics
         protected override void StartDataCollection(string playerId)
         {
             UnityServices.ExternalUserId = playerId;
-            AnalyticsService.Instance.StartDataCollection();
+            EndUserConsent.SetConsentState(new ConsentState
+            {
+                AnalyticsIntent = ConsentStatus.Granted
+            });
         }
 
         protected override void StopDataCollection()
         {
-            AnalyticsService.Instance.StopDataCollection();
+            EndUserConsent.SetConsentState(new ConsentState
+            {
+                AnalyticsIntent = ConsentStatus.Denied
+            });
         }
 
         protected override void RequestDataDeletion()
         {
+            EndUserConsent.SetConsentState(new ConsentState
+            {
+                AnalyticsIntent = ConsentStatus.Denied
+            });
             AnalyticsService.Instance.RequestDataDeletion();
         }
 
