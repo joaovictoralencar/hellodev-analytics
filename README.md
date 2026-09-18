@@ -4,7 +4,8 @@ Reusable analytics abstractions and event data models for Unity projects. The pa
 
 - `IAnalytics` and `AnalyticsManagerBase` for provider-independent analytics flows.
 - Essential data and strongly typed tutorial event models.
-- A Unity Services Analytics adapter with local consent storage.
+- A provider-independent analytics API and event data models.
+- A Unity Services Analytics implementation available as an optional sample.
 
 ## Installation
 
@@ -14,7 +15,7 @@ Add the package to Unity Package Manager with:
 https://github.com/joaovictoralencar/hellodev-analytics.git
 ```
 
-For a released version, append the tag, for example `#v0.2.0`.
+For a released version, append the tag, for example `#v0.3.0`.
 
 ## Dependencies
 
@@ -24,8 +25,8 @@ For a released version, append the tag, for example `#v0.2.0`.
 
 Consent state is stored locally with Unity `PlayerPrefs`. The package does not require a project save system, authentication system, locator system, or scene system. Logging uses the shared HelloDev Logging system.
 
-## Unity implementation
+## Unity sample
 
-`Runtime/Analytics/Unity/UnityAnalyticsManager.cs` provides the Unity Services Analytics implementation. The `HelloDev.Analytics.Unity` assembly is included automatically when the package is installed.
+Import the **Unity Analytics Implementation** sample from the Package Manager to copy `Samples/Unity` into your project. It provides the Unity Services Analytics implementation and its `HelloDev.Analytics.Unity` assembly.
 
 Set the player ID through the manager before initialization when a project-specific ID is available; otherwise the application identifier is used.

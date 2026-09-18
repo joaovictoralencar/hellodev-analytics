@@ -1,6 +1,6 @@
 {
   "name": "com.hellodev.analytics",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "displayName": "HelloDev Analytics",
   "description": "Reusable analytics abstractions, event data models, and Unity Services Analytics integration.",
   "unity": "6000.0",
@@ -19,6 +19,13 @@
     "unity-services",
     "events",
     "telemetry"
+  ],
+  "samples": [
+    {
+      "displayName": "Unity Analytics Implementation",
+      "description": "Unity Services Analytics implementation with PlayerPrefs consent storage.",
+      "path": "Samples/Unity"
+    }
   ],
   "dependencies": {
     "com.cysharp.unitask": "2.5.11",
