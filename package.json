@@ -1,6 +1,6 @@
 {
   "name": "com.hellodev.analytics",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "displayName": "HelloDev Analytics",
   "description": "Reusable analytics abstractions, event data models, and Unity Services Analytics integration.",
   "unity": "6000.0",
@@ -24,7 +24,7 @@
     {
       "displayName": "Unity Analytics Implementation",
       "description": "Unity Services Analytics implementation with PlayerPrefs consent storage.",
-      "path": "Samples/Unity"
+      "path": "Samples~/Unity"
     }
   ],
   "dependencies": {

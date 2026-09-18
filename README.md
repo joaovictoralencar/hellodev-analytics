@@ -15,7 +15,7 @@ Add the package to Unity Package Manager with:
 https://github.com/joaovictoralencar/hellodev-analytics.git
 ```
 
-For a released version, append the tag, for example `#v0.3.0`.
+For a released version, append the tag, for example `#v0.3.1`.
 
 ## Dependencies
 
@@ -27,6 +27,6 @@ Consent state is stored locally with Unity `PlayerPrefs`. The package does not r
 
 ## Unity sample
 
-Import the **Unity Analytics Implementation** sample from the Package Manager to copy `Samples/Unity` into your project. It provides the Unity Services Analytics implementation and its `HelloDev.Analytics.Unity` assembly.
+Import the **Unity Analytics Implementation** sample from the Package Manager to copy `Samples~/Unity` into your project. It provides the Unity Services Analytics implementation and its `HelloDev.Analytics.Unity` assembly.
 
 Set the player ID through the manager before initialization when a project-specific ID is available; otherwise the application identifier is used.
